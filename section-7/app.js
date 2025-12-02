@@ -20,8 +20,7 @@ const shopRoutes = require("./routes/shop");
 app.use(shopRoutes);
 
 // HANDLING 404
-app.use((req, res) => {
-  res.status(404).render("404", { docTitle: "Page not found" });
-});
+const errorController = require("./controllers/error");
+app.use(errorController.get404Page);
 
 app.listen(3000);
