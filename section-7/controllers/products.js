@@ -15,10 +15,11 @@ exports.postProduct = (req, res) => {
 };
 
 exports.getProductListPage = (req, res) => {
-  const products = Product.fetchAll();
-  res.render("productList", {
-    products: products,
-    docTitle: "Products List",
-    path: "/",
+  Product.fetchAll((products) => {
+    res.render("productList", {
+      products: products,
+      docTitle: "Products List",
+      path: "/",
+    });
   });
 };
