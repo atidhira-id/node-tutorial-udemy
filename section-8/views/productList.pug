@@ -1,0 +1,22 @@
+extends layouts/main-layout.pug
+
+block styles 
+    link(rel="stylesheet", href="/css/product.css")
+
+block content
+    main 
+        if products.length > 0
+            .grid
+                each product in products 
+                    article.card.product-item
+                        header.card__header
+                            h1.product__title #{product.title}
+                        .card__image
+                            img(src="https://cdn.pixabay.com/photo/2018/01/17/18/43/book-3088775_1280.jpg" alt="A book")
+                        .card__content
+                            h2.product__price $19.99
+                            p.product__desc A very interesting book about anything that a human can imagine 
+                        .card__action 
+                            button.btn Add to cart 
+        else
+            h1 No Products

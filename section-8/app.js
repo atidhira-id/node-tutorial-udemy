@@ -1,0 +1,23 @@
+const path = require("path");
+const express = require("express");
+
+const app = express();
+
+app.set("view engine", "pug");
+app.set("views", "views");
+
+// MIDDLEWARE
+const bodyParser = require("body-parser");
+app.use(bodyParser.urlencoded({ extended: false }));
+
+app.use(express.static(path.join(__dirname, "public")));
+
+// ROUTES
+const productsRoutes = require("./routes/products");
+app.use("/", productsRoutes);
+
+// HANDLING 404
+const errorController = require("./controllers/error");
+app.use(errorController.get404Page);
+
+app.listen(3000);
