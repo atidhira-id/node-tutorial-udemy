@@ -13,11 +13,8 @@ app.use(bodyParser.urlencoded({ extended: false }));
 app.use(express.static(path.join(__dirname, "public")));
 
 // ROUTES
-const adminRoutes = require("./routes/admin");
-app.use("/admin", adminRoutes);
-
-const shopRoutes = require("./routes/shop");
-app.use(shopRoutes);
+const productsRoutes = require("./routes/products");
+app.use("/", productsRoutes);
 
 // HANDLING 404
 const errorController = require("./controllers/error");
