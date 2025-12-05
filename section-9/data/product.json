@@ -1,0 +1,16 @@
+[
+  {
+    "title": "A Red Book",
+    "imageUrl": "https://media.istockphoto.com/id/173015527/photo/a-single-red-book-on-a-white-surface.jpg?s=612x612&w=0&k=20&c=AeKmdZvg2_bRY2Yct7odWhZXav8CgDtLMc_5_pjSItY=",
+    "price": "300",
+    "description": "A book containing a red content",
+    "id": "1"
+  },
+  {
+    "title": "Black Car",
+    "imageUrl": "https://img.freepik.com/free-psd/black-isolated-car_23-2151852894.jpg?semt=ais_hybrid&w=740&q=80",
+    "price": "5000",
+    "description": "Family car with a black color",
+    "id": "2"
+  }
+]
