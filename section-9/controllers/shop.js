@@ -10,11 +10,26 @@ exports.getProducts = (req, res) => {
   });
 };
 
+exports.getProductDetail = (req, res) => {
+  const productId = req.params.productId;
+
+  Product.getProductById(productId, (product) => {
+    res.render("shop/product-detail", {
+      product: product,
+      docTitle: "Products Detail",
+    });
+  });
+};
+
 exports.getCart = (req, res) => {
   res.render("shop/cart", {
     docTitle: "Your Cart",
     path: "/cart",
   });
+};
+
+exports.postProductToCart = (req, res) => {
+  const productId = req.body.productId;
 };
 
 exports.getOrders = (req, res) => {
