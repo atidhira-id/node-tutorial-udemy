@@ -18,7 +18,6 @@ exports.getAddProductPage = (req, res) => {
 };
 
 exports.postProduct = (req, res) => {
-  console.log(req.body);
   const newProduct = new Product(req.body);
   newProduct.save();
 
