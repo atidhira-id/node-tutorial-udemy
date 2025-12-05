@@ -15,8 +15,10 @@ block content
                             img(src=product.imageUrl, alt="A book")
                         .card__content
                             h2.product__price #{product.price}
-                            p.product__desc #{product.description}
-                        .card__action
-                            button.btn Edit Book
+                            p.product__description #{product.description}
+                        .card__actions
+                            a(href="/admin/edit-product").btn Edit
+                            form(action="/admin/delete-product", method="POST") 
+                                button(type="submit").btn Delete
         else
             h1 No Products
