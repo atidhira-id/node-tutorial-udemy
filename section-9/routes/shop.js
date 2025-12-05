@@ -5,7 +5,11 @@ const router = express.Router();
 
 router.get("/", shopController.getProducts);
 
+router.get("/product/:productId", shopController.getProductDetail);
+
 router.get("/cart", shopController.getCart);
+
+router.post("/cart", shopController.postProductToCart);
 
 router.get("/orders", shopController.getOrders);
 
