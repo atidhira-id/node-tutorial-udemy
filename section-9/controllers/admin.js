@@ -11,10 +11,30 @@ exports.getProductListPage = (req, res) => {
 };
 
 exports.getAddProductPage = (req, res) => {
-  res.render("admin/add-product", {
-    docTitle: "Add Product",
-    path: "/admin/add-product",
-  });
+  const productId = req.params.productId;
+
+  if (!productId) {
+    const newProduct = new Product({
+      title: "",
+      imageUrl: "",
+      price: "",
+      description: "",
+    });
+
+    res.render("admin/add-product", {
+      docTitle: "Add Product",
+      product: newProduct,
+      path: "/admin/add-product",
+    });
+  } else {
+    Product.getProductById(productId, (product) => {
+      res.render("admin/add-product", {
+        docTitle: "Add Product",
+        product: product,
+        path: "/admin/add-product",
+      });
+    });
+  }
 };
 
 exports.postProduct = (req, res) => {
