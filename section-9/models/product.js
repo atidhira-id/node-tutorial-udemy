@@ -1,6 +1,7 @@
 const fs = require("fs");
 const path = require("path");
 const rootDir = require("../utils/path");
+const Cart = require("./cart");
 
 const p = path.join(rootDir, "data", "product.json");
 const getProductsFromFile = (cb) => {
@@ -48,6 +49,29 @@ module.exports = class Product {
     getProductsFromFile((products) => {
       const product = products.find((product) => product.id === productId);
       callback(product);
+    });
+  }
+
+  static deleteProductById(productId, callback) {
+    getProductsFromFile((products) => {
+      const product = products.find((prod) => prod.id === productId);
+      const updatedProducts = products.filter(
+        (product) => product.id !== productId
+      );
+
+      fs.writeFile(p, JSON.stringify(updatedProducts), (err) => {
+        if (!err) {
+          Cart.deleteProduct(productId, product.price);
+        }
+        console.log(err);
+      });
+
+      const response = {
+        isSuccess: true,
+        message: `Product with id: ${productId} successfully deleted.`,
+      };
+
+      callback(response);
     });
   }
 };
