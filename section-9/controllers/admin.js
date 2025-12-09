@@ -11,30 +11,28 @@ exports.getProductListPage = (req, res) => {
 };
 
 exports.getAddProductPage = (req, res) => {
+  res.render("admin/add-product", {
+    docTitle: "Add Product",
+    path: "/admin/add-product",
+    editing: false,
+  });
+};
+
+exports.getEditProductPage = (req, res) => {
   const productId = req.params.productId;
 
-  if (!productId) {
-    const newProduct = new Product({
-      title: "",
-      imageUrl: "",
-      price: "",
-      description: "",
-    });
+  Product.getProductById(productId, (product) => {
+    if (!product) {
+      return res.redirect("/");
+    }
 
     res.render("admin/add-product", {
-      docTitle: "Add Product",
-      product: newProduct,
-      path: "/admin/add-product",
+      docTitle: "Edit Product",
+      product: product,
+      path: "/admin/edit-product",
+      editing: true,
     });
-  } else {
-    Product.getProductById(productId, (product) => {
-      res.render("admin/add-product", {
-        docTitle: "Add Product",
-        product: product,
-        path: "/admin/add-product",
-      });
-    });
-  }
+  });
 };
 
 exports.postProduct = (req, res) => {
@@ -43,3 +41,5 @@ exports.postProduct = (req, res) => {
 
   res.redirect("/admin");
 };
+
+exports.postEditProduct = (req, res) => {};
