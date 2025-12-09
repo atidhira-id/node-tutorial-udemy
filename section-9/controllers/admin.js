@@ -42,4 +42,9 @@ exports.postProduct = (req, res) => {
   res.redirect("/admin");
 };
 
-exports.postEditProduct = (req, res) => {};
+exports.postEditProduct = (req, res) => {
+  const updatedProduct = new Product(req.body);
+  updatedProduct.save();
+
+  res.redirect("/admin");
+};
