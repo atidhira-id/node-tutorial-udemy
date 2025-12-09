@@ -1,4 +1,5 @@
 const Product = require("../models/product");
+const Cart = require("../models/cart");
 
 exports.getProductListPage = (req, res) => {
   Product.fetchAll((products) => {
@@ -47,4 +48,12 @@ exports.postEditProduct = (req, res) => {
   updatedProduct.save();
 
   res.redirect("/admin");
+};
+
+exports.deleteProductById = (req, res) => {
+  const { id } = req.body;
+  Product.deleteProductById(id, (response) => {
+    console.log(response.message);
+    res.redirect("/admin");
+  });
 };
