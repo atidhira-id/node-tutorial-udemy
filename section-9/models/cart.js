@@ -55,7 +55,6 @@ module.exports = class Cart {
         }
         return true;
       });
-      console.log(updatedProducts);
 
       cart.products = updatedProducts;
       cart.totalPrice -= price * deletedProductQuantity;
@@ -63,6 +62,16 @@ module.exports = class Cart {
       fs.writeFile(p, JSON.stringify(cart), (err) => {
         console.log(err);
       });
+    });
+  };
+
+  static fetchCart = (callback) => {
+    fs.readFile(p, (err, data) => {
+      if (err) {
+        callback(null);
+      }
+
+      callback(JSON.parse(data));
     });
   };
 };
