@@ -23,9 +23,27 @@ exports.getProductDetail = (req, res) => {
 };
 
 exports.getCart = (req, res) => {
-  res.render("shop/cart", {
-    docTitle: "Your Cart",
-    path: "/cart",
+  Cart.fetchCart((cartData) => {
+    Product.fetchAll((allProduct) => {
+      const productsOnCart = [];
+      for (const currentProduct of allProduct) {
+        for (const currentProductOnCart of cartData.products) {
+          if (currentProduct.id === currentProductOnCart.id) {
+            productsOnCart.push({
+              ...currentProduct,
+              quantity: currentProductOnCart.quantity,
+            });
+          }
+        }
+      }
+
+      res.render("shop/cart", {
+        docTitle: "Your Cart",
+        path: "/cart",
+        totalPrice: cartData.totalPrice,
+        products: productsOnCart,
+      });
+    });
   });
 };
 
