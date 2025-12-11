@@ -13,10 +13,8 @@ app.use(express.static(path.join(__dirname, "public")));
 // ROUTES
 const adminRoute = require("./routes/admin");
 app.use("/admin", adminRoute);
-
 const shopRoute = require("./routes/shop");
 app.use("/", shopRoute);
-
 const errorController = require("./controllers/error");
 app.use(errorController.get404Page);
 
