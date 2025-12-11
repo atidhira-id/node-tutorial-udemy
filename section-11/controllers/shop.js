@@ -1,29 +1,30 @@
 const Product = require("../models/product");
 const Cart = require("../models/cart");
 
-exports.getProducts = (req, res) => {
-  Product.fetchAll()
-    .then(([rows, _]) => {
-      res.render("shop/index", {
-        products: rows,
-        docTitle: "All Products",
-        path: "/",
-      });
-    })
-    .catch((err) => {
-      console.log(err);
+exports.getProducts = async (req, res) => {
+  try {
+    const products = await Product.findAll();
+    res.render("shop/index", {
+      products: products,
+      docTitle: "All Products",
+      path: "/",
     });
+  } catch (err) {
+    console.log(err);
+  }
 };
 
-exports.getProductDetail = (req, res) => {
+exports.getProductDetail = async (req, res) => {
   const productId = req.params.productId;
-
-  Product.getProductById(productId, (product) => {
+  try {
+    const product = await Product.findByPk(productId);
     res.render("shop/product-detail", {
       product: product,
       docTitle: "Products Detail",
     });
-  });
+  } catch (err) {
+    console.log(err);
+  }
 };
 
 exports.getCart = (req, res) => {
