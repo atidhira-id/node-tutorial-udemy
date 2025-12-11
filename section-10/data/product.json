@@ -1,1 +1,16 @@
-[{"id":"1","title":"B2 Plane","imageUrl":"https://upload.wikimedia.org/wikipedia/commons/7/77/RAF_F-35B_integration_flying_training_with_USAF_B-2_30092019_-_4.jpg","price":"5000","description":"The best plane for war today"},{"id":"2","title":"A book","imageUrl":"https://media.istockphoto.com/id/173015527/photo/a-single-red-book-on-a-white-surface.jpg?s=612x612&w=0&k=20&c=AeKmdZvg2_bRY2Yct7odWhZXav8CgDtLMc_5_pjSItY=","price":"20","description":"A book"}]
+[
+  {
+    "id": "1",
+    "title": "B2 Plane",
+    "imageUrl": "https://upload.wikimedia.org/wikipedia/commons/7/77/RAF_F-35B_integration_flying_training_with_USAF_B-2_30092019_-_4.jpg",
+    "price": "5000",
+    "description": "The best plane for war today"
+  },
+  {
+    "id": "2",
+    "title": "A book",
+    "imageUrl": "https://media.istockphoto.com/id/173015527/photo/a-single-red-book-on-a-white-surface.jpg?s=612x612&w=0&k=20&c=AeKmdZvg2_bRY2Yct7odWhZXav8CgDtLMc_5_pjSItY=",
+    "price": "20",
+    "description": "A book"
+  }
+]
