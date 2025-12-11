@@ -1,5 +1,6 @@
 const path = require("path");
 const express = require("express");
+const sequelize = require("./utils/database");
 
 const app = express();
 app.set("view engine", "pug");
@@ -18,4 +19,11 @@ app.use("/", shopRoute);
 const errorController = require("./controllers/error");
 app.use(errorController.get404Page);
 
-app.listen(3000);
+sequelize
+  .sync()
+  .then((result) => {
+    app.listen(3000);
+  })
+  .catch((err) => {
+    console.log(err);
+  });
