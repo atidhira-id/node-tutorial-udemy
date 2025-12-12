@@ -1,8 +1,9 @@
 const Product = require("../models/product");
+const User = require("../models/user");
 
 exports.getProductListPage = async (req, res) => {
   try {
-    const products = await Product.findAll();
+    const products = await req.user.getProducts();
     res.render("admin/index", {
       products: products,
       docTitle: "Products List",
@@ -25,12 +26,12 @@ exports.getEditProductPage = async (req, res) => {
   const productId = req.params.productId;
 
   try {
-    const product = await Product.findByPk(productId);
+    const product = await req.user.getProducts({ where: { id: productId } });
     res.render("admin/add-product", {
       docTitle: "Edit Product",
       path: "/admin/edit-product",
       editing: true,
-      product: product,
+      product: product[0],
     });
   } catch (err) {
     console.log(err);
@@ -41,7 +42,7 @@ exports.postProduct = async (req, res) => {
   const { title, imageUrl, price, description } = req.body;
 
   try {
-    const product = await Product.create({
+    const product = await req.user.createProduct({
       title: title,
       imageUrl: imageUrl,
       price: price,
