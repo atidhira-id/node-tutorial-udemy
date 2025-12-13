@@ -29,13 +29,20 @@ exports.getProductDetail = async (req, res) => {
 
 exports.getCart = async (req, res) => {
   try {
-    const cart = await user.getCart();
+    const cart = await req.user.getCart();
     const products = await cart.getProducts();
+    const total = products.reduce((acc, curr) => {
+      const quantity = curr.cartItem.quantity;
+      const price = curr.price;
+
+      return acc + quantity * price;
+    }, 0);
 
     res.render("shop/cart", {
       docTitle: "Your Cart",
       path: "/cart",
       products: products,
+      total: total,
     });
   } catch (err) {
     console.log(err);
@@ -44,13 +51,20 @@ exports.getCart = async (req, res) => {
 
 exports.postProductToCart = async (req, res) => {
   const productId = req.body.productId;
+
   try {
     const cart = await req.user.getCart();
     const productInCart = await cart.getProducts({ where: { id: productId } });
+    console.log(productInCart);
 
-    if (productInCart) {
-      const product =
-        productInCart.length >= 1 ? productInCart[0] : productInCart;
+    if (productInCart.length) {
+      const product = productInCart[0];
+
+      const newQuantity = product.cartItem.quantity + 1;
+      await cart.addProduct(product, { through: { quantity: newQuantity } });
+    } else {
+      const product = await Product.findByPk(productId);
+      await cart.addProduct(product, { through: { quantity: 1 } });
     }
 
     res.redirect("/cart");
@@ -59,12 +73,18 @@ exports.postProductToCart = async (req, res) => {
   }
 };
 
-exports.deleteProductFromCart = (req, res) => {
-  const { productId, productPrice } = req.body;
+exports.deleteProductFromCart = async (req, res) => {
+  const { productId } = req.body;
+  try {
+    const cart = await req.user.getCart();
+    const products = await cart.getProducts({ where: { id: productId } });
+    const product = products[0];
+    await product.cartItem.destroy();
 
-  Cart.deleteProduct(productId, productPrice);
-
-  res.redirect("/cart");
+    res.redirect("/cart");
+  } catch (err) {
+    console.log(err);
+  }
 };
 
 exports.getOrders = (req, res) => {
