@@ -87,11 +87,41 @@ exports.deleteProductFromCart = async (req, res) => {
   }
 };
 
-exports.getOrders = (req, res) => {
-  res.render("shop/orders", {
-    docTitle: "Your Orders",
-    path: "/orders",
-  });
+exports.createOrder = async (req, res) => {
+  try {
+    const cart = await req.user.getCart();
+    const products = await cart.getProducts();
+
+    // CREATE ORDER
+    const order = await req.user.createOrder();
+    order.addProducts(
+      products.map((product) => {
+        product.orderItem = { quantity: product.cartItem.quantity };
+        return product;
+      })
+    );
+
+    // RESETTING THE CART
+    await cart.setProducts(null);
+
+    res.redirect("/orders");
+  } catch (err) {
+    console.log(err);
+  }
+};
+
+exports.getOrdersPage = async (req, res) => {
+  try {
+    const orders = await req.user.getOrders({ include: ["products"] });
+    console.log(orders[0].products);
+    res.render("shop/orders", {
+      docTitle: "Your Orders",
+      path: "/orders",
+      orders: orders,
+    });
+  } catch (err) {
+    console.log(err);
+  }
 };
 
 exports.getCheckout = (req, res) => {
