@@ -5,7 +5,7 @@ block styles
 
 block content 
     main 
-        h1 Total: #{totalPrice}
+        h1 Total: #{total}
         if products.length > 0
             .grid
                 each product in products 
@@ -16,13 +16,12 @@ block content
                             img(src=product.imageUrl, alt="A book")
                         .card__content
                             h2.product__price #{product.price}
-                            h2.product__price #{product.quantity}
+                            h2.product__price #{product.cartItem.quantity}
                             p.product__description #{product.description}
                         .card__actions
                             a(href="/product/" + product.id).btn Details
                             form(action="/cart-delete", method="POST") 
                                 input(type="hidden", name="productId", value=product.id)
-                                input(type="hidden", name="productPrice", value=product.price)
                                 button.btn Delete
         else
             h1 No Products
