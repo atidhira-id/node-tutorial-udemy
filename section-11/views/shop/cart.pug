@@ -23,5 +23,7 @@ block content
                             form(action="/cart-delete", method="POST") 
                                 input(type="hidden", name="productId", value=product.id)
                                 button.btn Delete
+            form(action="/create-order", method="POST")
+                button.btn Create Order 
         else
             h1 No Products
