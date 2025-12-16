@@ -1,3 +1,4 @@
+import dotenv from "dotenv";
 import express from "express";
 import bodyParser from "body-parser";
 import path from "path";
@@ -5,6 +6,8 @@ import { fileURLToPath } from "url";
 import { mongoConnect } from "./utils/database.js";
 import adminRouter from "./routes/admin.js";
 import shopRouter from "./routes/shop.js";
+
+dotenv.config();
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
@@ -20,6 +23,6 @@ app.use(express.static(path.join(__dirname, "public")));
 app.use("/admin", adminRouter);
 app.use(shopRouter);
 
-mongoConnect(() => {
-  app.listen(3000);
+mongoConnect(process.env.MONGO_ID, process.env.MONGO_PASSWORD, () => {
+  app.listen(process.env.PORT);
 });
