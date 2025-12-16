@@ -25,3 +25,7 @@ export const getDb = () => {
 export const productsDb = () => {
   return getDb().collection("products");
 };
+
+export const usersDb = () => {
+  return getDb().collection("users");
+};
