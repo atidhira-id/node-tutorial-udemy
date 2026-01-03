@@ -2,11 +2,12 @@ import { ObjectId } from "mongodb";
 import { productsDb } from "../utils/database.js";
 
 class Product {
-  constructor(_title, _price, _description, _imageUrl) {
+  constructor(_title, _price, _description, _imageUrl, _userId) {
     this.title = _title;
     this.price = _price;
     this.description = _description;
     this.imageUrl = _imageUrl;
+    this.userId = _userId;
   }
 
   async save() {
