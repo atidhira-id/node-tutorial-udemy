@@ -39,8 +39,9 @@ export const getEditProductPage = async (req, res) => {
 
 export const postAddProduct = async (req, res) => {
   const { title, price, description, imageUrl } = req.body;
+  const user = req.user;
   try {
-    const product = new Product(title, price, description, imageUrl);
+    const product = new Product(title, price, description, imageUrl, user._id);
     await product.save();
     res.redirect("/admin");
   } catch (err) {
