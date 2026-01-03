@@ -29,3 +29,15 @@ export const productsDb = () => {
 export const usersDb = () => {
   return getDb().collection("users");
 };
+
+export const cartsDb = () => {
+  return getDb().collection("carts");
+};
+
+export const cartItemsDb = () => {
+  return getDb().collection("cartItems");
+};
+
+export const ordersDb = () => {
+  return getDb().collection("orders");
+};
